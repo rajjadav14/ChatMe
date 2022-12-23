@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {
@@ -7,7 +7,6 @@ import {
   Box,
   Button,
   Divider,
-  Drawer,
   IconButton,
   ListItemIcon,
   Menu,
@@ -18,11 +17,14 @@ import {
   Typography,
 } from "@mui/material";
 import { Logout, PersonAdd } from "@mui/icons-material";
+import SideDrawer from "./SideDrawer";
 import { display } from "@mui/system";
 
 function Header() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [drawer, setDrawer] = React.useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [searchText, setSearchText] = useState<string>("");
+
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -31,62 +33,9 @@ function Header() {
     setAnchorEl(null);
   };
 
-  const list = () => (
-    <Box
-      //sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
-      role="presentation"
-      sx={{ display: "flex", background: "" }}
-    >
-      <SearchIcon
-        fontSize="large"
-        sx={{
-          width: "42px",
-          mx: 1,
-          mt: 3,
-        }}
-      />
+  // const list = () => (
 
-      <TextField
-        id="input-with-sx"
-        margin="normal"
-        size="medium"
-        variant="outlined"
-        sx={{
-          backgroundColor: "white",
-          borderRadius: "6px",
-          border: "none",
-          mt: 2,
-        }}
-      />
-      <Avatar
-        sx={{
-          width: 42,
-          height: 42,
-          backgroundColor: "grey",
-          marginLeft: "auto",
-          mr: 2,
-          mt: 3,
-        }}
-      >
-        <IconButton onClick={() => setDrawer(false)}>
-          <ChevronRightIcon />
-        </IconButton>
-      </Avatar>
-      {/* <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
-      {/* <Divider /> */}
-    </Box>
-  );
+  // );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -99,7 +48,7 @@ function Header() {
             <IconButton
               size="large"
               edge="start"
-              onClick={() => setDrawer(true)}
+              onClick={() => setDrawerOpen(true)}
               color="inherit"
               aria-label="menu"
               sx={{ mx: 2 }}
@@ -113,18 +62,12 @@ function Header() {
                 />
               </Avatar>
             </IconButton>
-            <Drawer
-              anchor={"left"}
-              variant="persistent"
-              PaperProps={{
-                sx: { width: "28%", background: "rgb(79,136,121)" },
-              }}
-              // sx={{ width: "500px" }}
-              open={drawer}
-              onClose={() => setDrawer(false)}
-            >
-              {list()}
-            </Drawer>
+            <SideDrawer
+              drawerOpen={drawerOpen}
+              setDrawerOpen={setDrawerOpen}
+              searchText={searchText}
+              setSearchText={setSearchText}
+            />
           </Box>
           <Typography
             variant="h3"
