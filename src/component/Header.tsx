@@ -1,24 +1,19 @@
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {
   AppBar,
   Avatar,
   Box,
-  Button,
-  Divider,
   IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
-  TextField,
   Toolbar,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { Logout, PersonAdd } from "@mui/icons-material";
 import SideDrawer from "./SideDrawer";
-import { display } from "@mui/system";
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -32,10 +27,6 @@ function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  // const list = () => (
-
-  // );
 
   return (
     <Box sx={{ flexGrow: 1 }}>

@@ -58,7 +58,7 @@ function SideDrawer({
       anchor={"left"}
       variant="persistent"
       PaperProps={{
-        sx: { width: "25%", background: "rgb(79,136,121)" },
+        sx: { width: { md: "45%", lg: "25%" }, background: "rgb(79,136,121)" },
       }}
       open={drawerOpen}
       onClose={() => setDrawerOpen(false)}
@@ -125,7 +125,6 @@ function SideDrawer({
                   <CardActionArea
                     sx={{
                       display: "flex",
-                      marginLeft: "auto",
                       justifyContent: "flex-start",
                     }}
                   >
