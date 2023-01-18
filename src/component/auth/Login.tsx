@@ -21,7 +21,7 @@ function Login() {
   const [passError, setPassError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [showModel, setShowModel] = useState<boolean>(false);
-  const [sucess, setSucess] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -35,15 +35,12 @@ function Login() {
 
     const result = await login({ email, password });
 
-    console.log(result);
     // storing JWT token
     if (result.status === 200) {
-      console.log("in success");
-      setJWTToken(result.token);
-      setSucess(true);
+      result.token && setJWTToken(result.token);
+      setSuccess(true);
     } else {
-      console.log("in fail");
-      setSucess(false);
+      setSuccess(false);
     }
 
     setLoading(false);
@@ -156,10 +153,13 @@ function Login() {
       >
         <Alert
           onClose={handleClose}
-          severity="success"
-          sx={{ width: "100%", backgroundColor: "lightgreen" }}
+          severity={success ? "success" : "error"}
+          sx={{
+            width: "100%",
+            backgroundColor: success ? "lightgreen" : "lightred",
+          }}
         >
-          {sucess ? "Success!" : "Failed"}
+          {success ? "Success!" : "Something went wrong"}
         </Alert>
       </Snackbar>
     </>
