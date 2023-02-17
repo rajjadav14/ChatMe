@@ -1,7 +1,7 @@
 export const setJWTToken = (JWTtoken: string) => {
-  localStorage.setItem("JWTtoken", JSON.stringify(JWTtoken));
+  localStorage.setItem("JWTtoken", JWTtoken);
 };
 
 export const getJWTToken = () => {
-  localStorage.getItem("JWTtoken");
+  return localStorage.getItem("JWTtoken");
 };

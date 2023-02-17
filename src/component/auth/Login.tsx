@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -22,6 +23,7 @@ function Login() {
   const [loading, setLoading] = useState<boolean>(false);
   const [showModel, setShowModel] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
+  const history = useNavigate();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -39,6 +41,7 @@ function Login() {
     if (result.status === 200) {
       result.token && setJWTToken(result.token);
       setSuccess(true);
+      history("/chats");
     } else {
       setSuccess(false);
     }

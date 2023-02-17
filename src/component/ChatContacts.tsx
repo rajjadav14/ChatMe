@@ -7,37 +7,24 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { loadContacts } from "../api/chatApi";
+import { IUserData } from "../@types/types";
 
-interface IUserData {
-  name: string;
-  email: string;
-}
 interface IProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  selectUser: any;
 }
-function ChatContacts({ open, setOpen }: IProps) {
-  console.log(open, "dsa");
-  const [contacts, setContacts] = useState<IUserData[]>([
-    {
-      name: "Arpan",
-      email: "arpan@gmail.com",
-    },
-    {
-      name: "Matin",
-      email: "Matin@gmail.com",
-    },
-    {
-      name: "Smit",
-      email: "Smit@gmail.com",
-    },
-    {
-      name: "Mihir",
-      email: "Mihir@gmail.com",
-    },
-  ]);
+function ChatContacts({ open, setOpen, selectUser }: IProps) {
+  const [contacts, setContacts] = useState<IUserData[]>([]);
+  useEffect(() => {
+    (async () => {
+      const result = await loadContacts();
+      setContacts(result);
+    })();
+  }, []);
   return (
     <>
       <Box
@@ -84,7 +71,9 @@ function ChatContacts({ open, setOpen }: IProps) {
             ? contacts.map((user) => {
                 return (
                   <Card
-                    onClick={() => console.log("clicked")}
+                    onClick={() =>
+                      selectUser({ name: user.name, email: user.email })
+                    }
                     key={user.name}
                     sx={{
                       ":hover": { backgroundColor: "lightgoldenrodyellow" },
@@ -108,9 +97,7 @@ function ChatContacts({ open, setOpen }: IProps) {
                       />
                       <Box sx={{ ml: 2 }}>
                         <Typography variant="h5">{user.name}</Typography>
-                        <Typography variant="body1">
-                          Email:- {user.email}
-                        </Typography>
+                        <Typography variant="body1">{user.message}</Typography>
                       </Box>
                     </CardActionArea>
                   </Card>

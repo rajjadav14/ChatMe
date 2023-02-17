@@ -9,7 +9,7 @@ import {
 import React from "react";
 import ChatBox from "./ChatBox";
 
-function ChatPage() {
+function ChatPage({ selectedUser }: any) {
   return (
     <Box
       sx={{
@@ -20,7 +20,7 @@ function ChatPage() {
       }}
     >
       <Typography variant="h3" sx={{ backgroundColor: "lightgreen", m: 2 }}>
-        Arpan
+        {selectedUser.name || "Hello "}
       </Typography>
       <Box
         sx={{
@@ -33,7 +33,7 @@ function ChatPage() {
         }}
       >
         <FormControl variant="standard">
-          <ChatBox />
+          <ChatBox selectedUser={selectedUser} />
           <TextField
             InputProps={{
               endAdornment: (
